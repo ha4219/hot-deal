@@ -3,6 +3,7 @@ import { load } from "cheerio";
 import prisma from "@/app/libs/prismadb";
 
 type DealType = {
+  // id: string;
   title?: string;
   productId: number;
   imgUrl?: string;
@@ -16,7 +17,11 @@ type DealType = {
 
 const getHTML = async () => {
   try {
-    const res = await fetch("https://www.fmkorea.com/hotdeal");
+    const res = await fetch("https://www.fmkorea.com/hotdeal", {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    });
     const body = await res.text();
 
     const $ = load(body);
@@ -24,6 +29,11 @@ const getHTML = async () => {
     const ret: DealType = [];
     dealList.each((_, element) => {
       ret.push({
+        // id: $(element)
+        //   .find("h3.title > a")
+        //   .attr("href")!
+        //   .replace("/", "")
+        //   .trim(),
         title: $(element).find("h3.title > a").text().replace(/\s/g, "").trim(),
         productId: Number(
           $(element).find("h3.title > a").attr("href")!.replace("/", "").trim(),
@@ -63,8 +73,21 @@ export async function GET() {
   try {
     const data = await getHTML();
     if (typeof data !== "undefined") {
-      prisma.deal.createMany({
-        data,
+      // const res = await prisma.deal.createMany({
+      //   data: data,
+      //   skipDuplicates: true,
+      // });
+      // console.log(res, 20);
+      data.every(async (item) => {
+        try {
+          console.log(item);
+          const res = await prisma.deal.create({
+            data: item,
+          });
+          return true;
+        } catch {
+          return false;
+        }
       });
     }
 
