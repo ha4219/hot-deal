@@ -7,18 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Deal {
+model deal {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
-  productId       Int      @unique
-  imgUrl          String?
-  title           String?
-  shop            String?
-  displayPrice    String?
-  price           Int?
-  hashedPassword  String?
-  deliveryPrice   String?
-  category        String?
-  uploadAt        DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  link            String
+  thumb_img       String?
+  title           String
+  shop_info       String
+  price_info      String
+  delivery_info   String
+  category        String
+  regdate         String
+  author          String
+  created_at      DateTime
+}
+
+model User {
+  id            String  @id @map("_id")
+  name          String
+  image         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
