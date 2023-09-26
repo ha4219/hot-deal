@@ -5,6 +5,8 @@ import { LoginButton } from "@telegram-auth/react";
 
 const AuthForm = () => {
   const { data: session, status } = useSession();
+
+  console.log(123, session);
   return (
     <div>
       test
