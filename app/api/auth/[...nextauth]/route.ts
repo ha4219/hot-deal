@@ -55,8 +55,8 @@ export const authOptions: AuthOptions = {
                 image: userData.image,
               },
             });
-          } catch {
-            console.log("error oauth");
+          } catch (e: any) {
+            console.log("error oauth", e);
           }
 
           return userData;
@@ -65,9 +65,11 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  // session: {
-  //   strategy: "jwt",
-  // },
+  debug: process.env.NODE_ENV === "development",
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

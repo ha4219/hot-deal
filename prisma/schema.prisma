@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model deal {
+model Deal {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   link            String
   thumb_img       String?
@@ -27,6 +27,17 @@ model User {
   last_name     String
   image         String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  filtering Filtering?
+}
+
+model Filtering {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  filtering_text  String[]
+  created_at     DateTime @default(now())
+
+  user_id       String @unique
+  user          User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
