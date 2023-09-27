@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
-    "@telegram-auth/react": "^1.0.0",
-    "@telegram-auth/server": "^1.0.0",
+    "@telegram-auth/react": "*",
+    "@telegram-auth/server": "*",
     "@types/node": "20.4.4",
     "@types/react": "18.2.16",
     "@types/react-dom": "18.2.7",

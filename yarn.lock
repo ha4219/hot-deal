@@ -253,12 +253,12 @@
   dependencies:
     tslib "^2.4.0"
 
-"@telegram-auth/react@^1.0.0":
+"@telegram-auth/react@*":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@telegram-auth/react/-/react-1.0.0.tgz#7fa15ba87973a00bc2f1dc83dc8e096282e030b9"
   integrity sha512-dBN6avXAYlpWLbSgYdnPUpGFAqF8dPlv7joaMli1dEAp168uow/qGNh7hVRHMNaNIu3SMsH/DYoL496yoMwm4Q==
 
-"@telegram-auth/server@^1.0.0":
+"@telegram-auth/server@*":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@telegram-auth/server/-/server-1.0.0.tgz#e77948d399e54084ea9455d40964dcff8e034218"
   integrity sha512-qoRO40avyefgjm7kX8MXyNRJrgUU0JEDIpNiUUKPZRjOd+GXCaH8nLGhR6XFpCtUI5po6UvM6nsMNIZLxWdgdQ==
