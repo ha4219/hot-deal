@@ -1,4 +1,5 @@
 import NextAuth, { AuthOptions } from "next-auth";
+import KakaoProvider from "next-auth/providers/kakao";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { objectToAuthDataMap, AuthDataValidator } from "@telegram-auth/server";
 
@@ -18,6 +19,10 @@ declare module "next-auth" {
 
 export const authOptions: AuthOptions = {
   providers: [
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID!,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       id: "telegram-login",
       name: "Telegram Login",

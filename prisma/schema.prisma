@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -7,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Deal {
+model deal {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   link            String
   thumb_img       String?
@@ -19,6 +20,8 @@ model Deal {
   regdate         String
   author          String
   created_at      DateTime
+
+  @@fulltext([title])
 }
 
 model User {

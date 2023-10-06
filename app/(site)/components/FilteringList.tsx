@@ -5,7 +5,7 @@ interface FilteringListProps {
 const FilteringList: React.FC<FilteringListProps> = ({ initialItems }) => {
   return (
     <div>
-      <label>filtering_tex : </label>
+      <label>filtering_text : </label>
       <span>{initialItems.join(", ")}</span>
     </div>
   );

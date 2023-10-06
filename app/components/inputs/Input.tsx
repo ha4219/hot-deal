@@ -4,13 +4,17 @@ import clsx from "clsx";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
-  label: string;
+  label?: string;
   id: string;
   type?: string;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   errors: FieldErrors;
   disabled?: boolean;
+  pattern?: {
+    value: RegExp;
+    message: string;
+  };
 }
 
 const Input: React.FC<InputProps> = ({
@@ -21,13 +25,16 @@ const Input: React.FC<InputProps> = ({
   register,
   errors,
   disabled,
+  pattern,
 }) => {
   return (
     <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900">
-        {label}
-      </label>
-      <div className="mt-2">
+      {label && (
+        <label className="block text-sm font-medium leading-6 text-gray-900">
+          {label}
+        </label>
+      )}
+      <div>
         <input
           className={clsx(
             `form-input focus-ring-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6`,
@@ -38,7 +45,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           autoComplete={id}
           disabled={disabled}
-          {...register(id, { required })}
+          {...register(id, { required, pattern })}
         />
       </div>
     </div>

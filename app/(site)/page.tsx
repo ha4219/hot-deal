@@ -3,17 +3,23 @@ import AuthForm from "./components/AuthForm";
 import FilterForm from "./components/FilterForm";
 import getFiltering from "../actions/getFiltering";
 import FilteringList from "./components/FilteringList";
+import Link from "next/link";
+import Body from "./components/Body";
 
-export default async function Home() {
+interface IParams {
+  page: number;
+}
+
+export default async function Home({ params }: { params: IParams }) {
   const filtering = await getFiltering();
+
+  console.log(params.page);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="min-h-screen p-24">
       <AuthForm />
 
       <FilteringList initialItems={filtering} />
-      <div>
-        <FilterForm />
-      </div>
+      <Body />
     </main>
   );
 }
