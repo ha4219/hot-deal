@@ -1,25 +1,21 @@
-import Image from "next/image";
 import AuthForm from "./components/AuthForm";
-import FilterForm from "./components/FilterForm";
-import getFiltering from "../actions/getFiltering";
-import FilteringList from "./components/FilteringList";
-import Link from "next/link";
 import Body from "./components/Body";
+import { FilteringContextProvider } from "../context/FilteringContext";
 
 interface IParams {
   page: number;
 }
 
 export default async function Home({ params }: { params: IParams }) {
-  const filtering = await getFiltering();
-
-  console.log(params.page);
   return (
     <main className="min-h-screen p-24">
-      <AuthForm />
+      <div className="mx-auto max-w-[90%]  sm:max-w-2xl lg:max-w-4xl">
+        <AuthForm />
 
-      <FilteringList initialItems={filtering} />
-      <Body />
+        <FilteringContextProvider>
+          <Body />
+        </FilteringContextProvider>
+      </div>
     </main>
   );
 }

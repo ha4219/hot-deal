@@ -2,21 +2,29 @@
 
 import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { HashtagIcon, PlusIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import {
+  FilteringContext,
+  FilteringDispatchContext,
+} from "@/app/context/FilteringContext";
+import FilteringList from "./FilteringList";
 
 type FilterFormValue = {
   filter: string;
 };
 const FilterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const state = useContext(FilteringContext);
+  const dispatch = useContext(FilteringDispatchContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FilterFormValue>({
     defaultValues: {
       filter: "",
@@ -25,24 +33,41 @@ const FilterForm = () => {
 
   const onSubmit: SubmitHandler<FilterFormValue> = (data) => {
     setIsLoading(true);
+    if (dispatch) {
+      dispatch({ type: "ADD", value: data.filter });
+      reset();
+    }
+    setIsLoading(false);
 
-    fetch(`/api/filter`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-      .catch(() => {
-        console.log("fetch catch");
-      })
-      .finally(() => setIsLoading(false));
+    // fetch(`/api/filter`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    // })
+    //   .catch(() => {
+    //     console.log("fetch catch");
+    //   })
+    //   .finally(() => setIsLoading(false));
+  };
+
+  const removeFilter = (value: string) => {
+    setIsLoading(true);
+    if (dispatch) {
+      dispatch({
+        type: "REMOVE",
+        value,
+      });
+    }
+    setIsLoading(false);
   };
 
   return (
-    <div>
+    <div className="">
       <form
-        className="mt-40 flex flex-col items-center"
+        className="flex flex-col items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="mx-auto mt-5 flex w-full max-w-[90%] items-center rounded-full border border-gray-200 px-5 py-3 focus-within:shadow-md hover:shadow-md sm:max-w-xl lg:max-w-2xl">
+        <div className="mt-5 flex w-full  items-center border border-gray-200 px-3 py-3 ">
+          {/* focus-within:shadow-md hover:shadow-md */}
           <HashtagIcon className="mr-3 h-5 text-gray-500" />
           {/* <Input
             id="filter"
@@ -78,12 +103,13 @@ const FilterForm = () => {
           <p className="mt-1 text-xs text-red-500">{errors.filter.message}</p>
         )}
 
-        <div>
+        {/* <div>
           <Button disabled={isLoading} type="submit">
             save
           </Button>
-        </div>
+        </div> */}
       </form>
+      <FilteringList remove={removeFilter} />
     </div>
   );
 };

@@ -1,5 +1,3 @@
-"use client";
-
 import { DealType } from "@/app/types";
 import DealItem from "./DealItem";
 
@@ -10,7 +8,7 @@ interface DealListProps {
 const DealList: React.FC<DealListProps> = ({ dealList }) => {
   // TODO with pagination
   return (
-    <div>
+    <div className="space-y-4">
       {dealList.map((item) => (
         <DealItem data={item} key={item.link} />
       ))}
